@@ -1,0 +1,14 @@
+{
+  "pins" : [
+    {
+      "identity" : "ios-sdk",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/tillhainbach/ios-sdk",
+      "state" : {
+        "branch" : "add-spm-support",
+        "revision" : "42756258c1f4234a235dc957222ad576a6fe160a"
+      }
+    }
+  ],
+  "version" : 2
+}
