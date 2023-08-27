@@ -1,9 +1,3 @@
-//
-//  SpotifyController.swift
-//  SpotifyQuickStart
-//
-//  Created by Till Hainbach on 02.04.21.
-//
 
 import SwiftUI
 import SpotifyiOS
