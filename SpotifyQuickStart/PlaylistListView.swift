@@ -132,6 +132,7 @@ struct PlaylistView: View {
           print("Generated random tempo:", randomTempo)
         if let selectedTrack = self.selectTrackWithTempoInRange(from: self.tracks, targetTempo: randomTempo) {
               print("Selected track with tempo:", selectedTrack.audioFeatures?.tempo ?? "N/A")
+          print(selectedTrack.name)
               spotifyController.playTrack(uri: selectedTrack.uri)
           } else {
               print("No track found with suitable tempo.")
@@ -255,6 +256,7 @@ struct Track: Codable, Identifiable {
     let id: String
     let name: String
     let uri: String
+  let duration_ms: Int
     var audioFeatures: AudioFeatures? // Include audio features for the track
 }
 

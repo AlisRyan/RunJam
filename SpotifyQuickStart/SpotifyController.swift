@@ -135,16 +135,20 @@ extension SpotifyController: SPTAppRemotePlayerStateDelegate {
       }
   }
   func isPlaying(completion: @escaping (Bool, Error?) -> Void) {
+    do {
       appRemote.playerAPI?.getPlayerState({ playerState, error in
-          if let error = error {
-              print("Error checking playback state:", error)
-              completion(false, error)
-          } else if let playbackState = playerState as? SPTAppRemotePlayerState {
-              completion(playbackState.isPaused == false, nil)
-          } else {
-              completion(false, nil)
-          }
+        if let error = error {
+          print("Error checking playback state:", error)
+          completion(false, error)
+        } else if let playbackState = playerState as? SPTAppRemotePlayerState {
+          completion(playbackState.isPaused == false, nil)
+        } else {
+          completion(false, nil)
+        }
       })
+    } catch {
+      print(error)
+    }
   }
     
 }
