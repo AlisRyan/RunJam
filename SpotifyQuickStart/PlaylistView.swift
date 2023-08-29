@@ -9,6 +9,7 @@ import SwiftUI
 import CoreMotion
 import SpotifyiOS
 
+@available(iOS 15.0, *)
 struct PlaylistListView: View {
   @State private var playlists: [Playlist] = []
   @State private var selectedPlaylists: [Playlist] = []
@@ -23,6 +24,7 @@ struct PlaylistListView: View {
   @State private var timerRemainingTime: TimeInterval = 0
   @State private var songStartTime: Date?
   @State private var timer: Timer?
+  @State private var currTrack: Track?
 
 
 
@@ -43,24 +45,30 @@ struct PlaylistListView: View {
             .tabItem {
               Label("Selected", systemImage: "rectangle.stack.badge.plus")
             }
-          Button(action: {
+          if (self.currTrack == nil) {
+            CustomButton(title: "Continue", action: {
+              fetchTracksForSelectedPlaylists()
+              areTracksFetched = true
 
-            fetchTracksForSelectedPlaylists()
-            areTracksFetched = true
-            //
-            //            if let firstTrack = tracks.first {
-            //              spotifyController.playTrack(uri: firstTrack.id)
-            //            }
-          }) {
-            Text("Continue")
-              .font(.headline)
-              .foregroundColor(.white)
-              .padding()
-              .background(Color.blue)
-              .cornerRadius(10)
-          }
-          .tabItem {
-            Label("Continue", systemImage: "arrow.right.circle")
+              if let firstTrack = tracks.first {
+                spotifyController.playTrack(uri: firstTrack.id)
+              }
+            })
+            .tabItem {
+              Label("Continue", systemImage: "arrow.right.circle")
+            }
+          } else {
+            PlayingView(track: currTrack!, skipAction: {
+              fetchTracksForSelectedPlaylists()
+              areTracksFetched = true
+
+              if let firstTrack = tracks.first {
+                spotifyController.playTrack(uri: firstTrack.id)
+              }
+            }, pauseAction: {})
+              .tabItem {
+                Label("Playing", systemImage: "arrow.right.circle")
+              }
           }
         }
         .onAppear(perform: fetchPlaylists)
@@ -104,6 +112,7 @@ struct PlaylistListView: View {
           print(selectedTrack.name)
           print(selectedTrack.duration_ms)
           self.songStartTime = Date()
+          self.currTrack = selectedTrack
 
           if self.timer == nil || !self.timer!.isValid {
               // Create the timer if it doesn't exist or is not valid

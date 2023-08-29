@@ -42,7 +42,7 @@ struct StackPlaylistView: View {
         }
       }
     }
-    .edgesIgnoringSafeArea([.top, .bottom])
+//    .edgesIgnoringSafeArea([.top, .bottom])
   }
 }
 

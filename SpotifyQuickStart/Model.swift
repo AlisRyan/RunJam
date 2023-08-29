@@ -23,11 +23,11 @@ struct PlaylistImage: Codable {
   let url: String
 }
 
-struct Album: Hashable, Codable, Identifiable {
+struct Album: Codable, Identifiable {
     let id: String
     let name: String
-  let images: [Images]
-  let artists: [Artist]
+  let images: [PlaylistImage]
+//  let artists: [Artist]
 
 }
 
@@ -54,6 +54,8 @@ struct Track: Codable, Identifiable {
     let uri: String
   let duration_ms: Int
     var audioFeatures: AudioFeatures?
+  let album: Album
+  let artists: [Artist]
 }
 
 struct AudioFeatures: Codable {

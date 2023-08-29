@@ -3,6 +3,7 @@ import SwiftUI
 import SpotifyiOS
 
 
+@available(iOS 15.0, *)
 @main
 struct SpotifyQuickStart: App {
     @StateObject var spotifyController = SpotifyController()

@@ -19,7 +19,7 @@ struct PlaylistView: View {
 
 
   var body: some View {
-    NavigationView {
+//    NavigationView {
       if accessToken.isEmpty {
         Text("Loading...")
       } else {
@@ -53,8 +53,8 @@ struct PlaylistView: View {
         }
         .onAppear(perform: fetchPlaylists)
       }
-    }
-    .navigationTitle("RunJam") 
+//    }
+//    .navigationTitle("RunJam") 
 
   }
 //  func selectSecondClosestTrackToTempo(from tracks: [Track], targetTempo: Float) -> Track? {

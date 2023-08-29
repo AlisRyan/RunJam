@@ -21,7 +21,7 @@ struct SinglePlaylistView: View {
               image
                 .resizable()
                 .aspectRatio(contentMode: .fit)
-                .frame(width: 100)
+                .frame(width: 70)
                 .padding(.all, 20)
             case .failure(_):
               Image(systemName: "photo")
@@ -40,7 +40,7 @@ struct SinglePlaylistView: View {
           }
           VStack(alignment: .leading) {
             Text(playlist.name)
-              .font(.system(size: 26, weight: .bold, design: .default))
+              .font(.system(size: 20, design: .default))
               .foregroundColor(.black)
           }.padding(.trailing, 20)
           Spacer()

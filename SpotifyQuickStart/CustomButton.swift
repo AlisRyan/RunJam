@@ -10,10 +10,10 @@ import SwiftUI
 @available(iOS 15.0, *)
 struct CustomButton: View {
   var title: String
-  @State var areTracksFetched = false
+  var action: () -> Void // Closure property for the action
     var body: some View {
       Button(action: {
-        areTracksFetched = true
+        action()
       }) {
         Text(title)
           .padding()
@@ -38,6 +38,7 @@ struct CustomButton: View {
 @available(iOS 15.0, *)
 struct CustomButton_Previews: PreviewProvider {
     static var previews: some View {
-      CustomButton(title:"Click me")
-    }
+      CustomButton(title: "Click me") {
+          print("Button clicked!")
+      }    }
 }

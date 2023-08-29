@@ -1,6 +1,7 @@
 
 import SwiftUI
 
+@available(iOS 15.0, *)
 struct ContentView: View {
     @StateObject var spotifyController = SpotifyController()
 
