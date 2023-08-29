@@ -13,15 +13,14 @@ struct PlaylistView: View {
   @State private var isLoading = false
   var accessToken: String
   @State private var areTracksFetched = false
-  @State private var tracks: [Track] = [] // Replace
-  @EnvironmentObject var spotifyController: SpotifyController // Access the SpotifyController as an environment object
+  @State private var tracks: [Track] = []
+  @EnvironmentObject var spotifyController: SpotifyController
   @State private var first = true
 
 
   var body: some View {
     NavigationView {
       if accessToken.isEmpty {
-        // Display a loading state or placeholder
         Text("Loading...")
       } else {
         TabView {
@@ -55,7 +54,7 @@ struct PlaylistView: View {
         .onAppear(perform: fetchPlaylists)
       }
     }
-    .navigationTitle("RunJam") // Set your desired title here
+    .navigationTitle("RunJam") 
 
   }
 //  func selectSecondClosestTrackToTempo(from tracks: [Track], targetTempo: Float) -> Track? {
@@ -249,29 +248,4 @@ struct PlaylistView: View {
       }
     }.resume()
   }
-}
-
-
-struct Track: Codable, Identifiable {
-    let id: String
-    let name: String
-    let uri: String
-  let duration_ms: Int
-    var audioFeatures: AudioFeatures? // Include audio features for the track
-}
-
-struct AudioFeatures: Codable {
-    let tempo: Float
-    // Include other relevant audio features you might need
-}
-
-
-struct TrackItem: Codable {
-    let track: Track
-    // Add other properties you need from the "track" object
-}
-
-struct TracksResponse: Codable {
-    let items: [TrackItem]
-    // Add other properties you need from the response
 }

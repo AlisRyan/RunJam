@@ -34,7 +34,6 @@ struct UnselectedPlaylistView: View {
                   .frame(width: 50, height: 50)
               }
             } else {
-              // Fallback on earlier versions
             }                    }
           Text(playlist.name)
         }

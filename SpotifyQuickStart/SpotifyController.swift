@@ -135,7 +135,6 @@ extension SpotifyController: SPTAppRemotePlayerStateDelegate {
       }
   }
   func isPlaying(completion: @escaping (Bool, Error?) -> Void) {
-    do {
       appRemote.playerAPI?.getPlayerState({ playerState, error in
         if let error = error {
           print("Error checking playback state:", error)
@@ -146,9 +145,6 @@ extension SpotifyController: SPTAppRemotePlayerStateDelegate {
           completion(false, nil)
         }
       })
-    } catch {
-      print(error)
-    }
   }
     
 }

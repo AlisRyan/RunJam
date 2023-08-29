@@ -9,7 +9,6 @@ import Foundation
 
 struct PlaylistResponse: Codable {
   let items: [Playlist]
-  // You can add more properties if needed
 }
 
 struct Playlist: Codable, Identifiable {
@@ -18,7 +17,6 @@ struct Playlist: Codable, Identifiable {
   let images: [PlaylistImage]
 //  let tracks: [Track] // Assuming tracks is a property of type [Track]
 
-  // You can add more properties if needed}
 }
 
 struct PlaylistImage: Codable {
@@ -31,7 +29,6 @@ struct Album: Hashable, Codable, Identifiable {
   let images: [Images]
   let artists: [Artist]
 
-    // Add other properties as needed
 }
 
 struct Artist: Hashable, Codable, Identifiable {
@@ -41,7 +38,6 @@ struct Artist: Hashable, Codable, Identifiable {
 
 struct Images: Hashable, Codable {
   let url: String
-    // Add other properties as needed
 }
 
 struct SearchResponse: Codable {
@@ -51,6 +47,28 @@ struct SearchResponse: Codable {
         let items: [Album]
     }
 }
+
+struct Track: Codable, Identifiable {
+    let id: String
+    let name: String
+    let uri: String
+  let duration_ms: Int
+    var audioFeatures: AudioFeatures?
+}
+
+struct AudioFeatures: Codable {
+    let tempo: Float
+}
+
+
+struct TrackItem: Codable {
+    let track: Track
+}
+
+struct TracksResponse: Codable {
+    let items: [TrackItem]
+}
+
 
 struct AuthResponse: Codable {
     let access_token: String

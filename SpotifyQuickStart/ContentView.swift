@@ -9,7 +9,7 @@ struct ContentView: View {
             PlaylistListView(accessToken: spotifyController.accessToken ?? "")
                 .environmentObject(spotifyController)
         }
-        .navigationTitle("RunJam") // Set your desired title here
+        .navigationTitle("RunJam") 
     }
 }
 

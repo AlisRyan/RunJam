@@ -15,12 +15,14 @@ struct PlaylistListView: View {
   @State private var isLoading = false
   var accessToken: String
   @State private var areTracksFetched = false
-  @State private var tracks: [Track] = [] // Replace
-  @EnvironmentObject var spotifyController: SpotifyController // Access the SpotifyController as an environment object
+  @State private var tracks: [Track] = []
+  @EnvironmentObject var spotifyController: SpotifyController
   @State private var first = true
   private let pedometer = CMPedometer()
-  @State private var cadence: Double = 0.0 // Store the current cadence
+  @State private var cadence: Double = 0.0
   @State private var timerRemainingTime: TimeInterval = 0
+  @State private var songStartTime: Date?
+  @State private var timer: Timer?
 
 
 
@@ -28,8 +30,9 @@ struct PlaylistListView: View {
   var body: some View {
     NavigationView {
       if accessToken.isEmpty {
-        // Display a loading state or placeholder
-        Text("Loading...")
+        ProgressView("Loading...")
+            .font(.headline)
+            .padding()
       } else {
         TabView {
           UnselectedPlaylistView(playlists: $playlists, selectedPlaylists: $selectedPlaylists)
@@ -64,7 +67,9 @@ struct PlaylistListView: View {
         .onAppear(perform: startCadence)
       }
     }
-    .navigationTitle("RunJam") // Set your desired title here
+    .navigationTitle("RunJam")
+    .navigationBarTitleDisplayMode(.inline)
+
 
   }
 
@@ -98,8 +103,14 @@ struct PlaylistListView: View {
           self.spotifyController.playTrack(uri: selectedTrack.uri)
           print(selectedTrack.name)
           print(selectedTrack.duration_ms)
-          timerStuff(track: selectedTrack)
-        }
+          self.songStartTime = Date()
+
+          if self.timer == nil || !self.timer!.isValid {
+              // Create the timer if it doesn't exist or is not valid
+              self.timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
+                  self.timerStuff(track: selectedTrack)
+              }
+          }        }
       } else {
         print("No track found with suitable tempo.")
       }
@@ -132,15 +143,18 @@ struct PlaylistListView: View {
   }
 
   func timerStuff(track: Track) {
-    self.timerRemainingTime = TimeInterval(track.duration_ms) / 1000
-    Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { timer in
-      self.timerRemainingTime -= 1
-      if self.timerRemainingTime <= 120 {
-        print("HEYO")
-        timer.invalidate()
-        fetchTracksForSelectedPlaylists()
-      }
+    if let songStartTime = self.songStartTime {
+        let currentTime = Date()
+        let elapsedTime = currentTime.timeIntervalSince(songStartTime)
+      print(currentTime)
+      print(elapsedTime)
+
+        if elapsedTime + 10 >= TimeInterval(track.duration_ms) / 1000 {
+            self.songStartTime = nil
+            self.fetchTracksForSelectedPlaylists()
+        }
     }
+
   }
 
 
