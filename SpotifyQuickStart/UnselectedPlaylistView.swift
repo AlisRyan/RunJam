@@ -12,7 +12,7 @@ struct UnselectedPlaylistView: View {
   @Binding var selectedPlaylists: [Playlist]
 
   var body: some View {
-    VStack {
+    ScrollView {
       LinearGradient(
            gradient: Gradient(colors: [
                Color(red: 227/255, green: 175/255, blue: 204/255),
@@ -34,7 +34,7 @@ struct UnselectedPlaylistView: View {
         }
       )
       .frame(height: 150)
-      ScrollView {
+//      ScrollView {
         VStack {
           ForEach(playlists, id: \.id) { playlist in
             Button(action: {
@@ -48,7 +48,7 @@ struct UnselectedPlaylistView: View {
             }
           }
         }
-      }
+//      }
     }
     .edgesIgnoringSafeArea([.top, .bottom])
   }

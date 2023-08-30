@@ -20,7 +20,7 @@ struct PlaylistListView: View {
   @EnvironmentObject var spotifyController: SpotifyController
   @State private var first = true
   private let pedometer = CMPedometer()
-  @State private var cadence: Double = 0.0
+  @State private var cadence: Double = 2.5
   @State private var timerRemainingTime: TimeInterval = 0
   @State private var songStartTime: Date?
   @State private var timer: Timer?
@@ -65,7 +65,7 @@ struct PlaylistListView: View {
               if let firstTrack = tracks.first {
                 spotifyController.playTrack(uri: firstTrack.id)
               }
-            }, pauseAction: {})
+            }, pauseAction: {}, cadence: Int(cadence * 60))
               .tabItem {
                 Label("Playing", systemImage: "arrow.right.circle")
               }
@@ -77,6 +77,8 @@ struct PlaylistListView: View {
     }
     .navigationTitle("RunJam")
     .navigationBarTitleDisplayMode(.inline)
+    .environmentObject(spotifyController) // Inject the SpotifyController instance
+
 
 
   }
@@ -115,7 +117,6 @@ struct PlaylistListView: View {
           self.currTrack = selectedTrack
 
           if self.timer == nil || !self.timer!.isValid {
-              // Create the timer if it doesn't exist or is not valid
               self.timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
                   self.timerStuff(track: selectedTrack)
               }
@@ -123,30 +124,6 @@ struct PlaylistListView: View {
       } else {
         print("No track found with suitable tempo.")
       }
-//      if let selectedTrack = self.selectTrackWithTempoInRange(from: self.tracks, targetTempo: Float(100)) {
-//          if let index = self.tracks.firstIndex(where: { $0.id == selectedTrack.id }) {
-//              self.tracks.remove(at: index)
-//              print("Selected track with tempo:", selectedTrack.audioFeatures?.tempo ?? "N/A")
-//              self.spotifyController.playTrack(uri: selectedTrack.uri)
-//              print(selectedTrack.name)
-//              print(selectedTrack.duration_ms)
-//
-//              // Start the timer with the track's duration
-//              self.timerRemainingTime = TimeInterval(selectedTrack.duration_ms) / 1000
-//
-//              // Create a timer that triggers when the timer reaches 0
-//              Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { timer in
-//                  self.timerRemainingTime -= 1
-//
-//                  // When timer reaches 0, fetch new tracks
-//                  if self.timerRemainingTime <= 100 {
-//                    print("HEYO")
-//                      timer.invalidate() // Stop the timer
-//                      self.fetchTracksForSelectedPlaylists()
-//                  }
-//              }
-//          }
-//      }
 
     }
   }
@@ -155,8 +132,6 @@ struct PlaylistListView: View {
     if let songStartTime = self.songStartTime {
         let currentTime = Date()
         let elapsedTime = currentTime.timeIntervalSince(songStartTime)
-      print(currentTime)
-      print(elapsedTime)
 
         if elapsedTime + 10 >= TimeInterval(track.duration_ms) / 1000 {
             self.songStartTime = nil
@@ -167,7 +142,7 @@ struct PlaylistListView: View {
   }
 
 
-  func selectTrackClosestToTempo(from tracks: [Track], targetTempo: Float) -> Track? {
+  func selectTrackWithTempoInRange(from tracks: [Track], targetTempo: Float) -> Track? {
     var closestTrack: Track?
     var minTempoDifference: Float = .greatestFiniteMagnitude
     let target = targetTempo * 60
@@ -175,20 +150,19 @@ struct PlaylistListView: View {
     for track in tracks {
       if let tempo = track.audioFeatures?.tempo {
         let tempoDifference = abs(tempo - target)
+        let tempoDifferenceTwo = abs(tempo - target / 2) + 5
         if tempoDifference < minTempoDifference {
           minTempoDifference = tempoDifference
+          closestTrack = track
+        }
+        if tempoDifferenceTwo < minTempoDifference {
+          minTempoDifference = tempoDifferenceTwo
           closestTrack = track
         }
       }
     }
 
     return closestTrack
-  }
-
-
-  func selectTrackWithTempoInRange(from tracks: [Track], targetTempo: Float) -> Track? {
-    return selectTrackClosestToTempo(from: tracks, targetTempo: targetTempo)
-
   }
 
 

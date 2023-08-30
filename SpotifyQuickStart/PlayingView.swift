@@ -9,15 +9,25 @@ import SwiftUI
 
 @available(iOS 15.0, *)
 struct PlayingView: View {
-  @State private var isPlaying = false
+  @State private var isPlaying = true
   var track: Track
   var skipAction: () -> Void
   var pauseAction: () -> Void
+  @EnvironmentObject var spotifyController: SpotifyController // Access the SpotifyController instance
+  var cadence: Int
+
+
 
   var body: some View {
     VStack {
+      Spacer()
+      Image("spotify-full")
+          .resizable()
+          .aspectRatio(contentMode: .fit)
+          .frame(width: 150)
+          .colorInvert()
       if let imageUrl = track.album.images.first?.url,
-          let url = URL(string: imageUrl) {
+         let url = URL(string: imageUrl) {
 
         AsyncImage(url: url) { phase in
           switch phase {
@@ -27,6 +37,7 @@ struct PlayingView: View {
               .aspectRatio(contentMode: .fit)
               .frame(width: 300)
               .padding(.all, 20)
+              .shadow(color: Color.black.opacity(0.5), radius: 5, x: 0, y: 5)
           case .failure(_):
             Image(systemName: "photo")
               .resizable()
@@ -44,28 +55,35 @@ struct PlayingView: View {
         }
         Text(track.name)
           .font(.system(size: 30, weight: .bold))
-//          .padding(.top, 10)
+          .multilineTextAlignment(.center)
+
+        //          .padding(.top, 10)
 
         Text(track.artists.first!.name)
           .font(.system(size: 20))
           .foregroundColor(.gray)
+          .multilineTextAlignment(.center)
+
 
         HStack(spacing: 40) {
           Button(action: {
-            // Play/Pause button action
             isPlaying.toggle()
+            if isPlaying {
+              spotifyController.appRemote.playerAPI?.resume(nil)
+            } else {
+              spotifyController.appRemote.playerAPI?.pause(nil)
+            }
           }) {
             Image(systemName: isPlaying ? "pause.circle.fill" : "play.circle.fill")
               .resizable()
               .frame(width: 60, height: 60)
               .foregroundColor(.black)
-            //                      .background(Color.black)
-            //                      .clipShape(Circle())
 
           }
 
           Button(action: {
             skipAction()
+            isPlaying = true
           }) {
             Image(systemName: "forward.end.fill")
               .resizable()
@@ -73,11 +91,28 @@ struct PlayingView: View {
               .foregroundColor(.black)
           }
         }
-        .padding(.top, 20)
+        Text("Current Cadence: \(cadence)")
+            .font(.system(size: 20))
+            .foregroundColor(.gray)
+            .padding(.top, 10)//        .padding(.bottom, 20)
       }
     }
-      .padding()
+    .padding()
+    .background {
+      RoundedRectangle(cornerRadius: 8)
+        .stroke(gradient, lineWidth: 10)
+    }
+    .padding(.bottom, 100)
   }
+  let gradient = LinearGradient(
+    gradient: Gradient(colors: [
+        Color(red: 227/255, green: 175/255, blue: 204/255),
+        Color(red: 201/255, green: 175/255, blue: 227/255),
+        Color(red: 175/255, green: 200/255, blue: 227/255)
+    ]),
+   startPoint: .leading,
+   endPoint: .trailing
+)
 }
 
 //@available(iOS 15.0, *)

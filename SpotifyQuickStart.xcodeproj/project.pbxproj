@@ -16,9 +16,7 @@
 		97589FB72A9D31A800D5C274 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97589FB62A9D31A800D5C274 /* CustomButton.swift */; };
 		97589FBB2A9D8C8800D5C274 /* SinglePlaylistView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97589FBA2A9D8C8800D5C274 /* SinglePlaylistView.swift */; };
 		97589FBD2A9D943000D5C274 /* StackPlaylistView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97589FBC2A9D943000D5C274 /* StackPlaylistView.swift */; };
-		97589FBF2A9E376200D5C274 /* NavView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97589FBE2A9E376200D5C274 /* NavView.swift */; };
 		97589FC12A9E37DA00D5C274 /* PlayingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97589FC02A9E37DA00D5C274 /* PlayingView.swift */; };
-		97E007212A99A0A8001EFE78 /* PlaylistListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97E007202A99A0A8001EFE78 /* PlaylistListView.swift */; };
 		97E007232A99A0E6001EFE78 /* UnselectedPlaylistView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97E007222A99A0E6001EFE78 /* UnselectedPlaylistView.swift */; };
 		97E007252A99A0FD001EFE78 /* SelectedPlaylistView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97E007242A99A0FD001EFE78 /* SelectedPlaylistView.swift */; };
 		97E007272A99A112001EFE78 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97E007262A99A112001EFE78 /* Model.swift */; };
@@ -36,9 +34,7 @@
 		97589FB62A9D31A800D5C274 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
 		97589FBA2A9D8C8800D5C274 /* SinglePlaylistView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SinglePlaylistView.swift; sourceTree = "<group>"; };
 		97589FBC2A9D943000D5C274 /* StackPlaylistView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StackPlaylistView.swift; sourceTree = "<group>"; };
-		97589FBE2A9E376200D5C274 /* NavView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavView.swift; sourceTree = "<group>"; };
 		97589FC02A9E37DA00D5C274 /* PlayingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayingView.swift; sourceTree = "<group>"; };
-		97E007202A99A0A8001EFE78 /* PlaylistListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistListView.swift; sourceTree = "<group>"; };
 		97E007222A99A0E6001EFE78 /* UnselectedPlaylistView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnselectedPlaylistView.swift; sourceTree = "<group>"; };
 		97E007242A99A0FD001EFE78 /* SelectedPlaylistView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedPlaylistView.swift; sourceTree = "<group>"; };
 		97E007262A99A112001EFE78 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
@@ -80,7 +76,6 @@
 				97E0072C2A9BC707001EFE78 /* PlaylistView.swift */,
 				2B1E78572617A23B005BEF56 /* ContentView.swift */,
 				2B1E787F2617C509005BEF56 /* SpotifyController.swift */,
-				97E007202A99A0A8001EFE78 /* PlaylistListView.swift */,
 				97E007222A99A0E6001EFE78 /* UnselectedPlaylistView.swift */,
 				97E007242A99A0FD001EFE78 /* SelectedPlaylistView.swift */,
 				97E007262A99A112001EFE78 /* Model.swift */,
@@ -90,7 +85,6 @@
 				97589FB62A9D31A800D5C274 /* CustomButton.swift */,
 				97589FBC2A9D943000D5C274 /* StackPlaylistView.swift */,
 				2B1E785B2617A23D005BEF56 /* Preview Content */,
-				97589FBE2A9E376200D5C274 /* NavView.swift */,
 				97589FC02A9E37DA00D5C274 /* PlayingView.swift */,
 			);
 			path = SpotifyQuickStart;
@@ -180,13 +174,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				97589FBF2A9E376200D5C274 /* NavView.swift in Sources */,
 				97E007272A99A112001EFE78 /* Model.swift in Sources */,
 				2B1E787C2617C4EC005BEF56 /* SpotifyQuickStart.swift in Sources */,
 				97589FB72A9D31A800D5C274 /* CustomButton.swift in Sources */,
 				2B1E78582617A23B005BEF56 /* ContentView.swift in Sources */,
 				97E0072D2A9BC707001EFE78 /* PlaylistView.swift in Sources */,
-				97E007212A99A0A8001EFE78 /* PlaylistListView.swift in Sources */,
 				97E007232A99A0E6001EFE78 /* UnselectedPlaylistView.swift in Sources */,
 				97589FC12A9E37DA00D5C274 /* PlayingView.swift in Sources */,
 				2B1E78802617C509005BEF56 /* SpotifyController.swift in Sources */,
