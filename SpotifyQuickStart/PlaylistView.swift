@@ -25,7 +25,7 @@ struct PlaylistListView: View {
   @State private var songStartTime: Date?
   @State private var timer: Timer?
   @State private var currTrack: Track?
-
+  @State private var activeTabIndex: Int = 0
 
 
 
@@ -36,27 +36,31 @@ struct PlaylistListView: View {
             .font(.headline)
             .padding()
       } else {
-        TabView {
+        TabView(selection: $activeTabIndex) {
           UnselectedPlaylistView(playlists: $playlists, selectedPlaylists: $selectedPlaylists)
             .tabItem {
               Label("Unselected", systemImage: "rectangle.stack.badge.minus")
             }
+            .tag(0)
           SelectedPlaylistView(selectedPlaylists: $selectedPlaylists, playlists: $playlists)
             .tabItem {
               Label("Selected", systemImage: "rectangle.stack.badge.plus")
             }
+            .tag(1)
           if (self.currTrack == nil) {
-            CustomButton(title: "Continue", action: {
+            CustomButton(title: "Start Playing!", action: {
               fetchTracksForSelectedPlaylists()
               areTracksFetched = true
 
               if let firstTrack = tracks.first {
                 spotifyController.playTrack(uri: firstTrack.id)
               }
+              activeTabIndex = 2
             })
             .tabItem {
-              Label("Continue", systemImage: "arrow.right.circle")
+              Label("Playing", systemImage: "arrow.right.circle")
             }
+            .tag(2)
           } else {
             PlayingView(track: currTrack!, skipAction: {
               fetchTracksForSelectedPlaylists()
@@ -69,6 +73,7 @@ struct PlaylistListView: View {
               .tabItem {
                 Label("Playing", systemImage: "arrow.right.circle")
               }
+              .tag(2)
           }
         }
         .onAppear(perform: fetchPlaylists)
@@ -77,9 +82,7 @@ struct PlaylistListView: View {
     }
     .navigationTitle("RunJam")
     .navigationBarTitleDisplayMode(.inline)
-    .environmentObject(spotifyController) // Inject the SpotifyController instance
-
-
+    .environmentObject(spotifyController) 
 
   }
 
@@ -117,7 +120,7 @@ struct PlaylistListView: View {
           self.currTrack = selectedTrack
 
           if self.timer == nil || !self.timer!.isValid {
-              self.timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
+            self.timer = Timer.scheduledTimer(withTimeInterval: 5.0, repeats: true) { _ in
                   self.timerStuff(track: selectedTrack)
               }
           }        }
@@ -132,6 +135,7 @@ struct PlaylistListView: View {
     if let songStartTime = self.songStartTime {
         let currentTime = Date()
         let elapsedTime = currentTime.timeIntervalSince(songStartTime)
+      print(elapsedTime)
 
         if elapsedTime + 10 >= TimeInterval(track.duration_ms) / 1000 {
             self.songStartTime = nil

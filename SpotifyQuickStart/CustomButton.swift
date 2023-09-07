@@ -18,9 +18,11 @@ struct CustomButton: View {
         Text(title)
           .padding()
           .foregroundColor(.black)
+          .font(.system(size: 30, weight: .semibold))
+          .padding(20)
           .background {
             RoundedRectangle(cornerRadius: 8)
-              .stroke(gradient, lineWidth: 2)
+              .stroke(gradient, lineWidth: 10)
           }
       }
     }
